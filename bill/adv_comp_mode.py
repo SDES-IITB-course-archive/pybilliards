@@ -94,7 +94,7 @@ def gameLoop():
             # Next shot placement, which ball to hit, is decided by the COMP,
             # depending on the some other factors (or may be randomly)
 
-            my_pocket_size = 2*my_ball_size
+            my_pocket_size = 2 * my_ball_size
             show_pockets(my_pocket_size)
 
             # balls_ok_to_hit = []
@@ -108,53 +108,57 @@ def gameLoop():
                 for other_ball in list_of_other_balls:
                     dist_white_other = hypot(white_ball.x-other_ball.x, white_ball.y-other_ball.y)
                     dist_my_other = hypot(my_ball.x-other_ball.x, my_ball.y-other_ball.y)
-                    # Distance between white and other ball, and my_ball and other ball
+                    # Distance between white and other ball,
+                    # and my_ball and other ball
 
                     dist_my_white = hypot(white_ball.x - my_ball.x, white_ball.y - my_ball.y)
                     if (dist_my_white > dist_white_other) & (dist_my_white > dist_my_other):
-                        # then test this other_ball location, since it is in between my_ball and white_ball :D
+                        # test this other_ball location,
+                        # since it is in between my_ball and white_ball
                         balls_to_be_tested.append(other_ball)
                 p, q = my_ball.x + 10, my_ball.y + 10
-                s = "T: " + str(len(balls_to_be_tested))
-                msg2screen(s, p, q)
-                pygame.display.update()
+                # s = "T: " + str(len(balls_to_be_tested))
+                # msg2screen(s, p, q)
+                # pygame.display.update()
                 if len(balls_to_be_tested) == 0:
                     my_ball.ok_to_hit = 1
                 else:
                     x1, y1 = white_ball.x, white_ball.y
                     x2, y2 = my_ball.x, my_ball.y
 
-                    # Testing for balls and their distance :D
+                    # Testing for balls and their distance
                     for test_ball in balls_to_be_tested:
                         x3, y3 = test_ball.x, test_ball.y
 
-                        # I will find of the perpendicular distance of point (x3, y3) from the line formed by the two points
-                        # (x2, y2), and (x1, y1) :D
+                        # I will find of the perpendicular distance of
+                        # point (x3, y3) from the line formed by the
+                        # two points (x2, y2), and (x1, y1)
 
-                        # Line equation in the form of Ax+ By+ C = 0 formed by the two points
-                        # (x2, y2), and (x1, y1) is
-                        A = tan(atan2(y2-y1, x2-x1))        # This is nothing but the slope of line :D
+                        # Line equation in the form of Ax+ By+ C = 0
+                        # formed by the two points x2,y2 and x1,y1 is
+                        A = tan(atan2(y2-y1, x2-x1))  # slope of line
                         B = -1
                         C = y1 - A*x1
-                        # Above formula is permutation from two point line equation :D
+                        # formula is permutation from two point line equation
 
-                        # Perpendicular distance is given by 
-                        # Reference: goo.gl/mUFJSh 
-                        perp_dist = abs(A*x3 + B*y3 + C)/ hypot(A,B)
-                        if perp_dist > 2*(test_ball.size + white_ball.size): 
-                            # Here the multiplier 2 is taken, to be sure of distance :D
+                        # Perpendicular distance is given by
+                        # Reference: goo.gl/mUFJSh
+                        perp_dist = abs(A*x3 + B*y3 + C) / hypot(A, B)
+                        if perp_dist > 2*(test_ball.size + white_ball.size):
+                            # Here multiplier 2 is taken to be sure of distance
                             my_ball.in_line_with_white_ball = 1
                         else:
                             my_ball.in_line_with_white_ball = 0
-                            # Why to break? Beacause this means that some comes in between line of sight, hence can't test, break it :D
+                            # Why to break? Beacause this means that some comes
+                            # between line of sight, hence can't test break it
                             break
 
-                    if my_ball.in_line_with_white_ball == 1:    # If that ball is hittable after testing will all balls :D
+                    if my_ball.in_line_with_white_ball == 1:
+                        # If that ball is hittable after testing will all balls
                         my_ball.ok_to_hit = 1
                     else:
                         my_ball.ok_to_hit = 0
-                
-            
+
             balls_ok_to_hit = [a_ball for a_ball in all_balls if a_ball.ok_to_hit == 1]
             # So hittable balls are extracted :D
             # This small loop will show which are able show hittable balls, some timepass programming :D

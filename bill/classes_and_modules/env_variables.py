@@ -6,7 +6,7 @@ GREEN = (0, 140, 0)
 FPS = 60
 dispSize = dispWidth, dispHeight = 800, 500
 
-scorecardSize = scorecardWidth, scorecardHeight = 400, 100
+scorecardSize = (800, 100)
 
 
 no_of_balls = 1    # 3
